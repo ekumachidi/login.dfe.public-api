@@ -30,10 +30,12 @@ if (sequelizeTransport) {
 }
 
 if (config.hostingEnvironment.applicationInsights) {
-  appInsights.setup(config.hostingEnvironment.applicationInsights).setAutoCollectConsole(false, false).start();
+  appInsights.setup(config.hostingEnvironment.applicationInsights)
+    .setAutoCollectConsole(false, false)
+    .start();
   loggerConfig.transports.push(new AppInsightsTransport({
     client: appInsights.defaultClient,
-    applicationName: config.loggerSettings.applicationName || 'Help',
+    applicationName: config.loggerSettings.applicationName || 'Public-API',
     type: 'event',
     treatErrorsAsExceptions: true,
   }));
