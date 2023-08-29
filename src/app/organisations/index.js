@@ -9,7 +9,29 @@ const getUserOverview = require('./getUserOverview');
 
 const area = () => {
   const router = express.Router();
-
+ /**
+ * @openapi
+ * /find-by-type:
+ *  get:
+ *     tags:
+ *     - Organisations
+ *     description: Returns organisation
+ *     parameters:
+ *       - name: Type
+ *         in: path
+ *         description: org type
+ *         type: integer
+ *         required: true
+ *       - name: Identifier
+ *         in: path
+ *         description: org Id
+ *         type: GUid
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: object returned
+ *    
+ */
   router.get('/find-by-type/:type/:identifier', asyncWrapper(getOrganisatiobByTypeAndIdentifier));
 
   router.post('/announcements',
@@ -23,8 +45,39 @@ const area = () => {
     body('publishedAt', 'publishedAt is not a valid ISO8601 format').isISO8601(),
     body('expiresAt', 'expiresAt is not a valid ISO8601 format').optional({ checkFalsy: true, nullable: true }).isISO8601(),
     asyncWrapper(upsertAnnouncement));
-
+  /**
+ * @openapi
+ * /announcements:
+ *  delete:
+    *     tags:
+    *     - Organisations
+    *     description: Deletes a anouncement message
+    *     parameters:
+    *       - name: messageId
+    *         in: path
+    *         description: identifier for anoucement
+    *         type: GUID
+    *         required: true
+    *     responses:
+    *       200:
+    *         description: OK   
+ */
   router.delete('/announcements/:messageId', asyncWrapper(deleteAnnouncement));
+  /**
+ * @swagger
+ * /:id/users:
+ *   get:
+ *     tags:
+ *       - Organisations
+ *     description: Returns all users by role
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An Array of Users
+ *         schema:
+ *           $ref: '#/definitions/user-overview'
+ */
   router.get('/:id/users', asyncWrapper(getUsersByRoles));
   router.get('/user-overview/:id', asyncWrapper(getUserOverview));
 

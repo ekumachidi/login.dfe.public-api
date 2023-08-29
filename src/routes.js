@@ -1,28 +1,54 @@
+const healthCheck = require('login.dfe.healthcheck');
 const config = require('./infrastructure/config');
 const logger = require('./infrastructure/logger');
 const { auth } = require('./app/utils');
 const { getClientByServiceId } = require('./infrastructure/applications');
-const healthCheck = require('login.dfe.healthcheck');
 const services = require('./app/services');
 const organisations = require('./app/organisations');
 const users = require('./app/users');
 
 const mountRoutes = (app) => {
+  /**
+ * @openapi
+ * /healthcheck:
+ *  get:
+ *     tags:
+ *     - Healthcheck
+ *     description: Returns API operational status
+ *     responses:
+ *       200:
+ *         description: API is  running
+ */
   app.use('/healthcheck', healthCheck({ config }));
-
+/**
+ * @swagger
+ * /users:
+ *  get:
+ *    security:              # <--- ADD THIS
+ *      - bearerAuth: []     # <--- ADD THIS
+ *    tags:
+ *      - Users
+ *    description: Returns a single person based on their JWT token
+ *    produces:
+ *      - application/json
+ *    responses:
+ *      200:
+ *        description: A single person
+ *        schema:
+ *            $ref: '#/definitions/PersonSimple'
+ */
   app.use(auth({
     audience: 'signin.education.gov.uk',
     clockTolerance: 30,
     clientLookup: getClientByServiceId,
   }));
-
   app.use('/services', services());
   app.use('/organisations', organisations());
   app.use('/users', users());
 
-  app.get('/test-routing', function (req, res) {
-    res.send('GET request to /test-route')
-  })
+  app.get('/test-routing', (req, res) => {
+    res.send('GET request to /test-route');
+  });
 
   app.use((err, req, res, next) => {
     logger.error(`Unhandled error processing ${req.url} - ${err.message} [server id: ${req.correlationId}, client id: ${req.clientCorrelationId}]`, {

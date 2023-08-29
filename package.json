@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "dev": "settings='./config/login.dfe.public-api.dev.json' node src/index.js",
-    "test": "settings='./config/login.dfe.public-api.dev.json' ./node_modules/.bin/jest --runInBand --detectOpenHandles --forceExit"
+    "swagger-autogen": "node ./docs/swagger.js",
+    "test": "settings='./config/login.dfe.public-api.dev.json' ./node_modules/.bin/jest --runInBand --detectOpenHandles --forceExit",
+    "start": "node --inspect=0.0.0.0 src/index.js"
   },
   "engines": {
     "node": "14.x.x"
@@ -24,14 +26,14 @@
     "applicationinsights": "^1.0.3",
     "body-parser": "^1.18.3",
     "email-validator": "^2.0.4",
-    "express": "^4.16.3",
+    "express": "^4.18.2",
     "express-validator": "^6.14.2",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.3.0",
-    "login.dfe.dao": "^3.3.4",
     "lodash": "^4.17.15",
     "login.dfe.api.auth": "github:DFE-Digital/login.dfe.api.auth#v2.0.2",
     "login.dfe.audit.winston-sequelize-transport": "git+https://github.com/DFE-Digital/login.dfe.audit.winston-sequelize-transport.git#v2.13",
+    "login.dfe.dao": "^3.3.4",
     "login.dfe.express-error-handling": "git+https://github.com/DFE-Digital/login.dfe.express-error-handling.git#v1.2",
     "login.dfe.healthcheck": "git+https://github.com/DFE-Digital/login.dfe.healthcheck.git#v1.8",
     "login.dfe.jwt-strategies": "git+https://github.com/DFE-Digital/login.dfe.jwt-strategies.git#v3.0",
@@ -41,6 +43,7 @@
     "login.dfe.winston-appinsights": "git+https://github.com/DFE-Digital/login.dfe.winston-appinsights.git#v3.0",
     "niceware": "^1.0.6",
     "promise-retry": "^1.1.1",
+    "redis": "^4.6.8",
     "request-promise": "^4.2.2",
     "uuid": "^3.3.2",
     "valid-url": "^1.0.9",
@@ -54,8 +57,11 @@
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
     "node-mocks-http": "^1.7.0",
-    "nodemon": "^2.0.19",
-    "supertest": "^6.2.4"
+    "nodemon": "^2.0.22",
+    "supertest": "^6.2.4",
+    "swagger-autogen": "^2.23.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
   "jest": {
     "testEnvironment": "node",
