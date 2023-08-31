@@ -62,7 +62,7 @@ const area = () => {
  *               type:
  *                 type: integer
  *                 description: type is numeric.
- *                 example: 500DF403-4643-4CDE-9F30-3C6D8AD27AD7
+ *                 example: 1,2,3,4,5 nothing else
  *               title:
  *                 type: string
  *                 description: not more than 255 characters.
