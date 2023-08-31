@@ -33,45 +33,59 @@ const area = () => {
  *    
  */
   router.get('/find-by-type/:type/:identifier', asyncWrapper(getOrganisatiobByTypeAndIdentifier));
- /**
+  /**
  * @openapi
  * /organisations/announcements:
  *  post:
  *     tags:
  *     - Organisations
- *     description: Returns organisation
- *     parameters:
- *       - in: body
- *         name: messageId
- *         description: message id is UUID.
- *       - in: body
- *         name: urn
- *         description: urn is numeric.
- *       - in: body
- *         name: uid
- *         description: uid is UUID.
- *       - in: body
- *         name: type
- *         description: type is integer.
- *       - in: body
- *         name: title
- *         description: not more than 255 characters.
- *       - in: body
- *         name: summary
- *         description: not more than 340 characters.
- *       - in: body
- *         name: body
- *         description: not more than 500 characters.
- *       - in: body
- *         name: publishedAt
- *         description: publishAt is valid ISO8601 format.
- *       - in: body
- *         name: expiresAt
- *         description: expiresAt is valid ISO8601 format.
+ *     summary: Create aan anouncement.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               messageId:
+ *                 type: UUID
+ *                 description: message id is UUID.
+ *                 example: 500DF403-4643-4CDE-9F30-3C6D8AD27AD7
+ *               urn:
+ *                 type: integer
+ *                 description: urn is numeric.
+ *                 example: 87758
+ *               uid:
+ *                 type: UUID
+ *                 description: uid is UUId.
+ *                 example: 500DF403-4643-4CDE-9F30-3C6D8AD27AD7
+ *               type:
+ *                 type: integer
+ *                 description: type is numeric.
+ *                 example: 500DF403-4643-4CDE-9F30-3C6D8AD27AD7
+ *               title:
+ *                 type: string
+ *                 description: not more than 255 characters.
+ *                 example: mainstream learning service
+ *               summary:
+ *                 type: string
+ *                 description: not more than 340 characters.
+ *                 example: service to get curicculum
+ *               body:
+ *                 type: string
+ *                 description: not more than 500 characters.
+ *                 example: ipsolurem, ipsolurem, ipsolurem
+ *               publishedAt:
+ *                 type: string
+ *                 description: publishAt is a valid ISO861 format.
+ *                 example: 04161970
+ *               expiresAt:
+ *                 type: string
+ *                 description: expiresAt is a valid ISO861 format.
+ *                 example: 119981177
  *     responses:
- *       200:
- *         description: OK
- *    
+ *       201:
+ *         description: Created
  */
   router.post('/announcements',
     body('messageId', 'messageId must be a valid UUID').isUUID(),
