@@ -11,7 +11,7 @@ const area = () => {
   const router = express.Router();
  /**
    * @openapi
-   * /:id/organisations:
+   * /users/{id}/organisations:
    *  get:
    *     tags:
    *     - Users
@@ -29,7 +29,7 @@ const area = () => {
   router.get('/:id/organisations', asyncWrapper(getUserOrganisations));
    /**
    * @openapi
-   * /:id/v2/organisations:
+   * /users/{id}/v2/organisations:
    *  get:
    *     tags:
    *     - Users
@@ -47,7 +47,7 @@ const area = () => {
   router.get('/:id/v2/organisations', asyncWrapper(getUserOrganisationsV2));
    /**
    * @openapi
-   * /:
+   * /users/:
    *  get:
    *     tags:
    *     - Users
@@ -59,7 +59,7 @@ const area = () => {
   router.get('/', asyncWrapper(getServiceUsers));
      /**
    * @openapi
-   * /approvers:
+   * /users/approvers:
    *  get:
    *     tags:
    *     - Users

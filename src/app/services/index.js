@@ -17,7 +17,7 @@ const area = () => {
   const router = express.Router();
   /**
    * @openapi
-   * /:
+   * /services/:
    *  get:
    *     tags:
    *     - Services
@@ -29,7 +29,7 @@ const area = () => {
   router.get('/', asyncWrapper(listServices));
   /**
    * @openapi
-   * /:
+   * /services/{clientid}:
    *  get:
    *     tags:
    *     - Services
@@ -47,7 +47,7 @@ const area = () => {
   router.get('/:clientid', asyncWrapper(getService));
   /**
    * @openapi
-   * /:
+   * /services/{clientid}:
    *  patch:
    *     tags:
    *     - Services
@@ -65,7 +65,7 @@ const area = () => {
   router.patch('/:clientid', asyncWrapper(updateService));
    /**
  * @openapi
- * /:
+ * /services/:
  *  delete:
     *     tags:
     *     - Services
@@ -83,25 +83,38 @@ const area = () => {
   router.delete('/:clientid', asyncWrapper(deleteService));
   /**
  * @openapi
- * /:
- *  post:
-    *     tags:
-    *     - Services
-    *     description: add a new service
-    *     parameters:
-    *       - name: clientid
-    *         in: path
-    *         description: identifier for client
-    *         type: GUID
-    *         required: true
-    *     responses:
-    *       200:
-    *         description: OK   
+ * /services/:
+ *   post:
+ *     tags:
+ *     - Services
+ *     summary: Create a service.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The service name.
+ *                 example: service 1
+ *               description:
+ *                 type: string
+ *                 description: what the service is.
+ *                 example: simple service
+ *               redirectUris:
+ *                 type: Array
+ *                 description: list or urls.
+ *                 example: ["url1", "url2"]
+ *     responses:
+ *       201:
+ *         description: Created
  */
   router.post('/', asyncWrapper(createService));
   /**
  * @openapi
- * /:clientid/regenerate-secret:
+ * /services/{clientid}/regenerate-secret:
  *  post:
     *     tags:
     *     - Services
@@ -119,7 +132,7 @@ const area = () => {
   router.post('/:clientid/regenerate-secret', asyncWrapper(regenerateSecret));
   /**
  * @openapi
- * /:sid/invitations:
+ * /services/{sid}/invitations:
  *  post:
     *     tags:
     *     - Services
@@ -137,7 +150,7 @@ const area = () => {
   router.post('/:sid/invitations', asyncWrapper(inviteUser));
    /**
    * @openapi
-   * /:sid/organisations/:oid/users/:uid:
+   * /services/{sid}/organisations/{oid}/users/{uid}:
    *  get:
    *     tags:
    *     - Services
@@ -166,7 +179,7 @@ const area = () => {
   // router.get('/:sid/users/:uid', asyncWrapper(getUsersAccess)); // TODO: Allow this once users can be mapped without organisation
    /**
    * @openapi
-   * /:sid/grants:
+   * /services/{sid}/grants:
    *  get:
    *     tags:
    *     - Services
@@ -184,7 +197,7 @@ const area = () => {
   router.get('/:sid/grants', asyncWrapper(serviceGrants));
     /**
    * @openapi
-   * /:sid/grants/:grantId/tokens:
+   * /services/{sid}/grants/{grantId}/tokens:
    *  get:
    *     tags:
    *     - Services

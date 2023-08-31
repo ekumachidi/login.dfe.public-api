@@ -14,29 +14,9 @@ const mountRoutes = (app) => {
  *  get:
  *     tags:
  *     - Healthcheck
- *     description: Returns API operational status
- *     responses:
- *       200:
- *         description: API is  running
- */
+ * */
   app.use('/healthcheck', healthCheck({ config }));
-/**
- * @swagger
- * /users:
- *  get:
- *    security:              # <--- ADD THIS
- *      - bearerAuth: []     # <--- ADD THIS
- *    tags:
- *      - Users
- *    description: Returns a single person based on their JWT token
- *    produces:
- *      - application/json
- *    responses:
- *      200:
- *        description: A single person
- *        schema:
- *            $ref: '#/definitions/PersonSimple'
- */
+
   app.use(auth({
     audience: 'signin.education.gov.uk',
     clockTolerance: 30,
@@ -45,7 +25,6 @@ const mountRoutes = (app) => {
   app.use('/services', services());
   app.use('/organisations', organisations());
   app.use('/users', users());
-
   app.get('/test-routing', (req, res) => {
     res.send('GET request to /test-route');
   });
